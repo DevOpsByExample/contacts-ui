@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const fetch = () => {
   return new Promise((resolve, reject) => {
-    axios.get('http://localhost:3000/contacts')
+    axios.get('/contacts')
     .then((response) => resolve(response.data))
     .catch((err) => reject(err));
   });
@@ -10,7 +10,7 @@ const fetch = () => {
 
 const add = (contact) => {
   return new Promise((resolve, reject) => {
-    axios.put('http://localhost:3000/contacts', contact)
+    axios.put('/contacts', contact)
     .then((response) => resolve(response.data))
     .catch((err) => reject(err));
   })
