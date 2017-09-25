@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const extractError = (error) => {
   if (error.response) {
-    const {response : {data:{message}, status}} = error;
+    const {response : {data:{message='Unable to reach server'}, status}} = error;
     return {status, message}
   } else if (error.request) {
     const {request} = error;

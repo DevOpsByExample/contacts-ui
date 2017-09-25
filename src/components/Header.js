@@ -18,9 +18,7 @@ const Header = (props) => {
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <Toolbar>
-          <Typography type="title" color="inherit">
-            Contacts
-          </Typography>
+          <Typography type="title" color="inherit">Contacts</Typography>
         </Toolbar>
       </AppBar>
     </div>
