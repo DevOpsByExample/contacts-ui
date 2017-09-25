@@ -17,6 +17,8 @@ import Checkbox from 'material-ui/Checkbox';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import FilterListIcon from 'material-ui-icons/FilterList';
+import Icon from 'material-ui/Icon';
+import _ from 'lodash';
 
 const columnData = [
   { id: 'firstName', numeric: false, disablePadding: true, label: 'First Name' },
@@ -145,6 +147,17 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
+  emptyPaper: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3,
+    overflowX: 'auto',
+    boxShadow: 'none',
+  },
+  icon: {
+    verticalAlign: 'middle',
+    marginRight: theme.spacing.unit,
+  }
 });
 
 class ContactList extends React.Component {
@@ -208,20 +221,72 @@ class ContactList extends React.Component {
     this.setState({ selected: newSelected });
   };
 
+  isEmpty = () => _.isEmpty(this.state.contacts);
+
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   componentWillReceiveProps(nextProps) {
     this.setState({contacts: nextProps.contacts})
   }
 
+  renderNoContacts() {
+    const { classes } = this.props;
+    if (this.isEmpty()) {
+      return (
+        <Paper className={classes.emptyPaper}>
+          <Typography type="caption">
+            <span>
+              <Icon className={classes.icon}>account_circle</Icon>
+              <span>No contacts found. Click '+' to create new contacts</span>
+            </span>
+          </Typography>
+        </Paper>
+      )
+    } else {
+      return (
+        <div />
+      )
+    }
+  }
+
+  renderContacts() {
+    const { contacts } = this.state;
+    return contacts.map(contact => {
+      const isSelected = this.isSelected(contact.id);
+      return (
+        <TableBody>
+          <TableRow
+            hover
+            onClick={event => this.handleClick(event, contact.id)}
+            onKeyDown={event => this.handleKeyDown(event, contact.id)}
+            role="checkbox"
+            aria-checked={isSelected}
+            tabIndex={-1}
+            key={contact.id}
+            selected={isSelected}
+          >
+            <TableCell checkbox>
+              <Checkbox checked={isSelected} />
+            </TableCell>
+            <TableCell disablePadding>{contact.firstName}</TableCell>
+            <TableCell disablePadding>{contact.lastName}</TableCell>
+            <TableCell disablePadding>{contact.phoneNumber}</TableCell>
+            <TableCell disablePadding>{contact.email}</TableCell>
+            <TableCell disablePadding>{contact.address}</TableCell>
+          </TableRow>
+        </TableBody>
+      );
+    })
+  }
+
   render() {
-    const classes = this.props.classes;
-    const { contacts, order, orderBy, selected } = this.state;
+    const { classes } = this.props;
+    const { order, orderBy, selected } = this.state;
 
     return (
       <Paper className={classes.paper}>
         <ContactListToolbar numSelected={selected.length} />
-        <Table>
+        <Table className={ this.isEmpty() ? 'empty': '' }>
           <ContactListHead
             numSelected={selected.length}
             order={order}
@@ -229,33 +294,9 @@ class ContactList extends React.Component {
             onSelectAllClick={this.handleSelectAllClick}
             onRequestSort={this.handleRequestSort}
           />
-          <TableBody>
-            {contacts.map(contact => {
-              const isSelected = this.isSelected(contact.id);
-              return (
-                <TableRow
-                  hover
-                  onClick={event => this.handleClick(event, contact.id)}
-                  onKeyDown={event => this.handleKeyDown(event, contact.id)}
-                  role="checkbox"
-                  aria-checked={isSelected}
-                  tabIndex={-1}
-                  key={contact.id}
-                  selected={isSelected}
-                >
-                  <TableCell checkbox>
-                    <Checkbox checked={isSelected} />
-                  </TableCell>
-                  <TableCell disablePadding>{contact.firstName}</TableCell>
-                  <TableCell disablePadding>{contact.lastName}</TableCell>
-                  <TableCell disablePadding>{contact.phoneNumber}</TableCell>
-                  <TableCell disablePadding>{contact.email}</TableCell>
-                  <TableCell disablePadding>{contact.address}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
+          { this.renderContacts() }
         </Table>
+          { this.renderNoContacts() }
       </Paper>
     );
   }

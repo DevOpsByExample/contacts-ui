@@ -107,11 +107,13 @@ class AddContactDialog extends React.Component {
     );
   }
   componentWillReceiveProps(nextProps) {
-    const { firstName='', lastName='', email='', phoneNumber='', address='' } = this.props.contact;
+    const {firstName='', lastName='', email='', phoneNumber='', address=''} = this.props.contact;
     this.setState({firstName, lastName, email, phoneNumber, address});
   }
   handleSave() {
-    add(this.state).then((contact) => this.props.onSave(contact));
+    add(this.state)
+    .then((contact) => this.props.onSave(contact))
+    .catch((error) => this.props.onError(error))
   }
   handleCancel() {
     this.props.onCancel();
@@ -125,12 +127,14 @@ AddContactDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
+  onError: PropTypes.func,
   selectedValue: PropTypes.string,
 };
 
 AddContactDialog.defaultProps = {
   onSave: () => {},
-  onCancel: () => {}
+  onCancel: () => {},
+  onError: () => {},
 }
 
 export default withStyles(styles)(AddContactDialog);

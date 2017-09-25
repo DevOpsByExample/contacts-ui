@@ -3,3 +3,7 @@
   bottom: 5%;
   right: 2%;
 }
+
+table.empty {
+  border-bottom: solid;
+}
