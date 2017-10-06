@@ -11,7 +11,7 @@ services:
     environment:
       - DB_HOST=db
       - DB_NAME=contacts
-      - DB_USER=test
+      - DB_USERNAME=test
       - DB_PASSWORD=test
     depends_on:
       - db
