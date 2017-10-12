@@ -9,7 +9,7 @@ services:
   api:
     image: devopsbyexample/contacts-api
     environment:
-      - DB_HOST=db
+      - DB_HOSTNAME=db
       - DB_NAME=contacts
       - DB_USERNAME=test
       - DB_PASSWORD=test
