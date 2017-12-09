@@ -8,5 +8,5 @@ RUN yarn build
 FROM nginx:1.13.5
 WORKDIR /opt/contacts-ui
 COPY --from=source /src/contacts-ui/build .
-COPY default.conf /etc/nginx/conf.d/default.conf
-CMD nginx -g 'daemon off;'
+COPY default.template /etc/nginx/conf.d/default.template
+CMD ["/bin/bash", "-c", "envsubst < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]

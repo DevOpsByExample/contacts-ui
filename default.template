@@ -12,6 +12,6 @@ server {
     }
 
     location /contacts {
-        proxy_pass http://api:3000;
+        proxy_pass http://${API_HOST}:${API_PORT};
     }
 }
