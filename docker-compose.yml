@@ -6,6 +6,9 @@ services:
       - "8080:80"
     depends_on:
       - api
+    environment:
+      - API_HOST=api
+      - API_PORT=3000
   api:
     image: devopsbyexample/contacts-api
     environment:
