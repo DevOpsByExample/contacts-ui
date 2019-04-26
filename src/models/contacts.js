@@ -24,7 +24,7 @@ const fetch = () => {
 
 const add = (contact) => {
   return new Promise((resolve, reject) => {
-    axios.put('/contacts', contact)
+    axios.post('/contacts', contact)
     .then((response) => resolve(response.data))
     .catch((error) => reject(extractError(error)));
   })
