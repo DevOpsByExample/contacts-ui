@@ -1,9 +1,9 @@
 FROM node:8.5.0 as source
 WORKDIR /src/contacts-ui
 COPY ./package.json ./
-RUN yarn install --production
+RUN npm install --production
 COPY . ./
-RUN yarn build
+RUN npm run build
 
 FROM nginx:1.13.5
 WORKDIR /opt/contacts-ui
