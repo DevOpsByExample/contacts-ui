@@ -1,23 +1,22 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import keycode from 'keycode';
-import Table, {
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TableSortLabel,
-} from 'material-ui/Table';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui-icons/Delete';
-import FilterListIcon from 'material-ui-icons/FilterList';
-import Icon from 'material-ui/Icon';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import TableSortLabel from '@material-ui/core/TableSortLabel'
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import Icon from '@material-ui/core/Icon';
 import _ from 'lodash';
 
 const columnData = [
@@ -47,10 +46,9 @@ class ContactListHead extends React.Component {
     return (
       <TableHead>
         <TableRow>
-          <TableCell checkbox>
+          <TableCell padding='checkbox'>
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < 5}
-              checked={numSelected === 5}
               onChange={onSelectAllClick}
             />
           </TableCell>
@@ -58,8 +56,6 @@ class ContactListHead extends React.Component {
             return (
               <TableCell
                 key={column.id}
-                numeric={column.numeric}
-                disablePadding={column.disablePadding}
               >
                 <TableSortLabel
                   active={orderBy === column.id}
@@ -144,19 +140,19 @@ ContactListToolbar = withStyles(toolbarStyles)(ContactListToolbar);
 const styles = theme => ({
   paper: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
     overflowX: 'auto',
   },
   emptyPaper: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
     overflowX: 'auto',
     boxShadow: 'none',
   },
   icon: {
     verticalAlign: 'middle',
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   }
 });
 
@@ -225,8 +221,8 @@ class ContactList extends React.Component {
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({contacts: nextProps.contacts})
+  static getDerivedStateFromProps(props, state) {
+    return {contacts: props.contacts};
   }
 
   renderNoContacts() {
@@ -254,7 +250,7 @@ class ContactList extends React.Component {
     return contacts.map(contact => {
       const isSelected = this.isSelected(contact.id);
       return (
-        <TableBody>
+        <TableBody key={contact.id}>
           <TableRow
             hover
             onClick={event => this.handleClick(event, contact.id)}
@@ -265,14 +261,14 @@ class ContactList extends React.Component {
             key={contact.id}
             selected={isSelected}
           >
-            <TableCell checkbox>
+            <TableCell padding='checkbox'>
               <Checkbox checked={isSelected} />
             </TableCell>
-            <TableCell disablePadding>{contact.firstName}</TableCell>
-            <TableCell disablePadding>{contact.lastName}</TableCell>
-            <TableCell disablePadding>{contact.phoneNumber}</TableCell>
-            <TableCell disablePadding>{contact.email}</TableCell>
-            <TableCell disablePadding>{contact.address}</TableCell>
+            <TableCell>{contact.firstName}</TableCell>
+            <TableCell>{contact.lastName}</TableCell>
+            <TableCell>{contact.phoneNumber}</TableCell>
+            <TableCell>{contact.email}</TableCell>
+            <TableCell>{contact.address}</TableCell>
           </TableRow>
         </TableBody>
       );
@@ -309,6 +305,6 @@ ContactList.propTypes = {
 
 ContactList.defaultProps = {
   contacts: [],
-}
+};
 
 export default withStyles(styles)(ContactList);

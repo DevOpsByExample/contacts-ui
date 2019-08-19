@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Dialog, { DialogTitle, DialogContent } from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
-import Grid from 'material-ui/Grid';
-import blue from 'material-ui/colors/blue';
-import TextField from 'material-ui/TextField';
+import withStyles  from '@material-ui/styles/withStyles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import blue from '@material-ui/core/colors/blue';
+import TextField from '@material-ui/core/TextField';
 import { add } from '../models/contacts';
 
 const styles = {
@@ -37,7 +39,7 @@ class AddContactDialog extends React.Component {
   render() {
     const { classes, open } = this.props;
     return (
-      <Dialog onRequestClose={this.handleRequestClose} open={open} ignoreBackdropClick >
+      <Dialog open={open} disableBackdropClick >
         <DialogTitle>Create Contact</DialogTitle>
         <DialogContent>
           <form className={classes.container} noValidate autoComplete="off">
@@ -106,10 +108,6 @@ class AddContactDialog extends React.Component {
       </Dialog>
     );
   }
-  componentWillReceiveProps(nextProps) {
-    const {firstName='', lastName='', email='', phoneNumber='', address=''} = this.props.contact;
-    this.setState({firstName, lastName, email, phoneNumber, address});
-  }
   handleSave() {
     add(this.state)
     .then((contact) => this.props.onSave(contact))
@@ -135,6 +133,6 @@ AddContactDialog.defaultProps = {
   onSave: () => {},
   onCancel: () => {},
   onError: () => {},
-}
+};
 
 export default withStyles(styles)(AddContactDialog);

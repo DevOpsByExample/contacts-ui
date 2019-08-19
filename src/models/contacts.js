@@ -12,7 +12,7 @@ const extractError = (error) => {
     const {message} = error;
     return {status: 500, message}
   }
-}
+};
 
 const fetch = () => {
   return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ const fetch = () => {
     .then((response) => resolve(response.data))
     .catch((error) => reject(extractError(error)));
   });
-}
+};
 
 const add = (contact) => {
   return new Promise((resolve, reject) => {
@@ -28,6 +28,6 @@ const add = (contact) => {
     .then((response) => resolve(response.data))
     .catch((error) => reject(extractError(error)));
   })
-}
+};
 
 export { fetch, add };

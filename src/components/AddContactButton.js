@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
+import { withStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 import './styles/button.css';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 });
 
@@ -20,9 +20,9 @@ class AddContactButton extends React.Component {
     const {classes} = this.props;
     return (
       <div className="add-contact">
-        <Button onClick={this.handleClick} fab color="primary" aria-label="add" className={classes.button}>
+        <Fab onClick={this.handleClick} color="primary" aria-label="add" className={classes.button}>
           <AddIcon />
-        </Button>
+        </Fab>
       </div>
     );
   }
@@ -38,6 +38,6 @@ AddContactButton.propTypes = {
 
 AddContactButton.defaultProps = {
   onAdd: () => {}
-}
+};
 
 export default withStyles(styles)(AddContactButton);
