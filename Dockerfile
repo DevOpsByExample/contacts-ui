@@ -5,7 +5,7 @@ RUN npm install --production
 COPY . ./
 RUN npm run build
 
-FROM nginx:1.13.5
+FROM nginx:1.17
 WORKDIR /opt/contacts-ui
 COPY --from=source /src/contacts-ui/build .
 COPY default.template /etc/nginx/conf.d/default.template
