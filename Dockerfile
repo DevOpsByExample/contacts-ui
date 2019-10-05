@@ -1,4 +1,4 @@
-FROM node:8.5.0 as source
+FROM node:12.10 as source
 WORKDIR /src/contacts-ui
 COPY ./package.json ./
 RUN npm install --production
